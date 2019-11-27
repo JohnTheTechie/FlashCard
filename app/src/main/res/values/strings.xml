@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">FlashCard</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Dictionary list item - default texts-->
+    <string name="dict_word_default_text">WORT</string>
+    <string name="dict_word_type_default_text">Wort_type</string>
+    <string name="dict_translation_default_text">Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+
+    <!-- Main menu button strings-->
+    <string name="entry_add_button">Neu Wort</string>
+    <string name="entry_review_button">Review</string>
+    <string name="flashcard_button">Practice</string>
+
+    <!-- Add entry activity string list -->
+    <string-array name="word_type_spinner">
+        <item name="verb">verb</item>
+        <item name="noun">noun</item>
+        <item name="adjective">adjective</item>
+        <item name="adverb">adverb</item>
+        <item name="grammar_particle">particle</item>
+    </string-array>
+    <string name="specimen_default">Foreign Word</string>
+    <string name="translation_default">Translation/description</string>
+
+
+</resources>
