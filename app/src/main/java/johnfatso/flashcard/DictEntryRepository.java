@@ -21,9 +21,35 @@ public class DictEntryRepository {
         this.reader =reader;
     }
 
+    //Retrieve an entry from the DB from the specified position
+
     public DictEntry getNthEntry(int pos){
         return dictEntryDao.getNthEntry(pos);
     }
+
+    private static class GetNthEntryAsyncTask extends AsyncTask<Integer, Void, DictEntry>{
+
+        DictEntryDao dao;
+        DBreader dBreader;
+
+        @Override
+        protected DictEntry doInBackground(Integer... integers) {
+            return dao.getNthEntry(integers[0]);
+        }
+
+        public GetNthEntryAsyncTask(DictEntryDao dao, DBreader dBreader) {
+            super();
+            this.dao = dao;
+            this.dBreader = dBreader;
+        }
+
+        @Override
+        protected void onPostExecute(DictEntry dictEntry) {
+            super.onPostExecute(dictEntry);
+        }
+    }
+
+    //get complete records from the DB
 
     public void getDataSet(){
         new GetAllDataAsyncTask(dictEntryDao, reader).execute();

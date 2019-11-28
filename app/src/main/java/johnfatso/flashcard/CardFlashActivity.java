@@ -13,7 +13,6 @@ import android.animation.AnimatorSet;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 
@@ -73,7 +72,7 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
 
         DictEntry[] dataset;
 
-        public CardPagerAdapter(@NonNull FragmentManager fm, int behavior, DictEntry[] dataset) {
+        CardPagerAdapter(@NonNull FragmentManager fm, int behavior, DictEntry[] dataset) {
             super(fm, behavior);
             this.dataset = dataset;
             Log.v(LOG_TAG, "Adapter constructor completed");
@@ -114,6 +113,7 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //TODO:handle counter more efficiently
                 counter.setText(position+1+"/"+pager.getAdapter().getCount());
             }
 
@@ -140,6 +140,6 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
 
         Log.v(LOG_TAG, "response received to card flash activity | entries recieved : "+dataset.length);
         setupPager((DictEntry[])data);
-        pager.setOffscreenPageLimit(6);
+        pager.setOffscreenPageLimit(10);
     }
 }

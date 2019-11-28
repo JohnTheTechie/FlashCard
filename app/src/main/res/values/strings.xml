@@ -25,6 +25,7 @@
     </string-array>
     <string name="specimen_default">Foreign Word</string>
     <string name="translation_default">Translation/description</string>
+    <string name="EntryAdditionConfirmationToast">Entry Added Successfully</string>
 
 
 </resources>

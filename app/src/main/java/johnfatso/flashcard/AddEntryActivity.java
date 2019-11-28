@@ -59,7 +59,7 @@ public class AddEntryActivity extends AppCompatActivity implements DBreader{
         translation = findViewById(R.id.translation_textbox);
         wordTypeSpinner = findViewById(R.id.spinner_word_type);
 
-        /**
+        /*
          * set onClickListener for add button
          */
         Button add_button = findViewById(R.id.button_add_entry);
@@ -102,7 +102,7 @@ public class AddEntryActivity extends AppCompatActivity implements DBreader{
         });
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.layout_type_spinner, getResources().getStringArray(R.array.word_type_spinner));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_type_spinner, getResources().getStringArray(R.array.word_type_spinner));
         wordTypeSpinner.setAdapter(adapter);
 
         Log.v(LOG_TAG_AddEntryActivity, "Add entry activity created");
@@ -126,8 +126,8 @@ public class AddEntryActivity extends AppCompatActivity implements DBreader{
 
         //read data from form
         String foreign_Word_from_the_text_box = specimen.getText().toString();
-        String translation_from_the_text_box = (String) translation.getText().toString();
-        String type_from_spinner = (String) wordTypeSpinner.getSelectedItem().toString();
+        String translation_from_the_text_box = translation.getText().toString();
+        String type_from_spinner = wordTypeSpinner.getSelectedItem().toString();
         long currentTime = System.currentTimeMillis();
 
         DictEntry entry = new DictEntry(total_count_from_db+1, foreign_Word_from_the_text_box, type_from_spinner, translation_from_the_text_box, currentTime);
@@ -152,21 +152,19 @@ public class AddEntryActivity extends AppCompatActivity implements DBreader{
 
     @Override
     public void DBreaderResponse(Object data) {
+        Log.v(LOG_TAG_AddEntryActivity, "callback called | status : "+STATUS_PROCESS);
         if(STATUS_PROCESS == STATUS_PROCESS_WAITING_FOR_COUNT_READING){
-            Log.v(LOG_TAG_AddEntryActivity, "callback called | status : "+STATUS_PROCESS);
             total_count_from_db = (int) data;
             STATUS_PROCESS = STATUS_PROCESS_WAITING_FOR_PUSHING_ENTRY_TO_DB;
             addEntryToTheDB();
         }
         else if(STATUS_PROCESS == STATUS_PROCESS_WAITING_FOR_PUSHING_ENTRY_TO_DB){
-            Log.v(LOG_TAG_AddEntryActivity, "callback called | status : "+STATUS_PROCESS);
             repository.getCountOfTotalDBEntries();
             STATUS_PROCESS = STATUS_PROCESS_POST_PUSH_COUNT_READ;
         }
         else if(STATUS_PROCESS == STATUS_PROCESS_POST_PUSH_COUNT_READ){
-            Log.v(LOG_TAG_AddEntryActivity, "callback called | status : "+STATUS_PROCESS);
             total_count_from_db = (int) data;
-            Toast.makeText(getApplicationContext(), "new Data pushed, latest count :"+total_count_from_db, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.EntryAdditionConfirmationToast, Toast.LENGTH_SHORT).show();
             returnResultIntent();
         }
         Log.v(LOG_TAG_AddEntryActivity, "callback called and completed | status : "+STATUS_PROCESS);
