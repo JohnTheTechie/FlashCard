@@ -130,7 +130,7 @@ public class AddEntryActivity extends AppCompatActivity implements DBreader{
         String type_from_spinner = wordTypeSpinner.getSelectedItem().toString();
         long currentTime = System.currentTimeMillis();
 
-        DictEntry entry = new DictEntry(total_count_from_db+1, foreign_Word_from_the_text_box, type_from_spinner, translation_from_the_text_box, currentTime);
+        DictEntry entry = new DictEntry(foreign_Word_from_the_text_box, type_from_spinner, translation_from_the_text_box, currentTime);
         Log.v(LOG_TAG_AddEntryActivity, "entries :"+total_count_from_db);
 
         repository.insert(entry);

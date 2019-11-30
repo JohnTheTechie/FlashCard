@@ -10,11 +10,8 @@ import java.sql.Date;
 @Entity(tableName = "dict_table")
 public class DictEntry {
 
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "index")
-    private int index;
 
+    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "german_word")
     private String deutcheWort;
@@ -31,16 +28,11 @@ public class DictEntry {
     @ColumnInfo(name = "entered_date")
     private long enteredDate;
 
-    public DictEntry(@NonNull int index, @NonNull String deutcheWort, @NonNull String deutcheWortType, @NonNull String englischeTranslation, @NonNull long enteredDate) {
-        this.index = index;
+    public DictEntry(@NonNull String deutcheWort, @NonNull String deutcheWortType, @NonNull String englischeTranslation, @NonNull long enteredDate) {
         this.deutcheWort = deutcheWort;
         this.deutcheWortType = deutcheWortType;
         this.englischeTranslation = englischeTranslation;
         this.enteredDate = enteredDate;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     public void setDeutcheWort(@NonNull String deutcheWort) {
@@ -57,10 +49,6 @@ public class DictEntry {
 
     public void setEnteredDate(long enteredDate) {
         this.enteredDate = enteredDate;
-    }
-
-    public int getIndex() {
-        return index;
     }
 
     public String getDeutcheWort() {

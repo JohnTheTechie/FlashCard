@@ -53,9 +53,7 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
     public void flipOutPager(Fragment fragment) {
         Log.v(LOG_TAG, "Animation started on pager | current page :" + pager.getCurrentItem());
         flipOutAnimator = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_out);
-        Log.v(LOG_TAG, "FlipOut animation to be applied to the item: "+ pager.getCurrentItem());
-        flipOutAnimator.setTarget(pager.getChildAt(pager.getCurrentItem()));
-        //flipOutAnimator.setTarget();
+        flipOutAnimator.setTarget(pager.getChildAt(getPositionIndexOfTheAvailableChild(pager.getCurrentItem())));
         flipOutAnimator.start();
     }
 
@@ -63,9 +61,18 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
     public void flipInPager(Fragment fragment) {
         Log.v(LOG_TAG, "Animation ended on pager | current page :" + pager.getCurrentItem());
         flipInAnimator = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.card_flip_right_in);
-        //flipInAnimator.setTarget(pager.getChildAt(pager.getCurrentItem()));
-        flipInAnimator.setTarget(pager.getChildAt(pager.getCurrentItem()));
+        flipInAnimator.setTarget(pager.getChildAt(getPositionIndexOfTheAvailableChild(pager.getCurrentItem())));
         flipInAnimator.start();
+    }
+
+    private int getPositionIndexOfTheAvailableChild(int position){
+        int actualPosition = -1;
+        int pageCount = adapter.getCount();
+        if(pageCount > 0){
+            if(position == 0) actualPosition = 0;
+            else actualPosition = 1;
+        }
+        return actualPosition;
     }
 
     private class CardPagerAdapter extends FragmentPagerAdapter{
@@ -94,33 +101,32 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
             return fragment;
         }
 
-        /**
+        /*
          * Return the number of views available.
          */
         @Override
         public int getCount() {
             return dataset.length;
         }
-
-
     }
 
     void setupPager(DictEntry[] dataset){
         adapter = new CardPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, dataset);
+
         //configuring list
         pager = findViewById(R.id.cardPager);
         pager.setAdapter(adapter);
+
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 //TODO:handle counter more efficiently
-                counter.setText(position+1+"/"+pager.getAdapter().getCount());
+                setCounter(position+1);
             }
 
             @Override
             public void onPageSelected(int position) {
-                currentPage = position;
-                Log.v(LOG_TAG, "selected page :"+position);
+                //do nothing
             }
 
             @Override
@@ -128,8 +134,6 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
                 //do nothing
             }
         });
-
-
 
         Log.v(LOG_TAG, "Pager setup completed");
     }
@@ -140,6 +144,13 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
 
         Log.v(LOG_TAG, "response received to card flash activity | entries recieved : "+dataset.length);
         setupPager((DictEntry[])data);
-        pager.setOffscreenPageLimit(10);
+        setCounter(1);
+    }
+
+    void setCounter(int position){
+        String counterText;
+        if(pager.getAdapter() != null) counterText = position+"/"+pager.getAdapter().getCount();
+        else counterText = "";
+        counter.setText(counterText);
     }
 }

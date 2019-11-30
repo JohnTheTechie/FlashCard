@@ -1,13 +1,10 @@
 package johnfatso.flashcard;
 
-import android.app.Activity;
 import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-
-import java.util.List;
+import java.util.ArrayList;
 
 public class DictEntryRepository {
     private DictEntryDao dictEntryDao;
@@ -21,31 +18,25 @@ public class DictEntryRepository {
         this.reader =reader;
     }
 
-    //Retrieve an entry from the DB from the specified position
-
-    public DictEntry getNthEntry(int pos){
-        return dictEntryDao.getNthEntry(pos);
+    public void deleteWord(String word){
+        new DeleteEntryAsyncTask(dictEntryDao, reader).execute(word);
     }
 
-    private static class GetNthEntryAsyncTask extends AsyncTask<Integer, Void, DictEntry>{
+    private static class DeleteEntryAsyncTask extends AsyncTask<String, Void, Void>{
 
         DictEntryDao dao;
-        DBreader dBreader;
+        DBreader reader;
 
-        @Override
-        protected DictEntry doInBackground(Integer... integers) {
-            return dao.getNthEntry(integers[0]);
-        }
-
-        public GetNthEntryAsyncTask(DictEntryDao dao, DBreader dBreader) {
+        DeleteEntryAsyncTask(DictEntryDao dao, DBreader reader) {
             super();
             this.dao = dao;
-            this.dBreader = dBreader;
+            this.reader = reader;
         }
 
         @Override
-        protected void onPostExecute(DictEntry dictEntry) {
-            super.onPostExecute(dictEntry);
+        protected Void doInBackground(String... strings) {
+            dao.deleteEntry(strings[0]);
+            return null;
         }
     }
 
@@ -80,7 +71,6 @@ public class DictEntryRepository {
             reader.DBreaderResponse(dictEntries);
         }
     }
-
 
     /*
     Implementation of AsycTask for Insert function
