@@ -12,7 +12,7 @@ import java.util.List;
 public interface DictEntryDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    void insert(DictEntry entry);
+    void insert(DictEntry... entry);
 
     @Query("DELETE FROM dict_table")
     void deleteAll();

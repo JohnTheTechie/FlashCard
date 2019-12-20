@@ -4,10 +4,8 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 public class DictEntryRepository {
-    private DictEntryDao dictEntryDao;
+    DictEntryDao dictEntryDao;
     private DBreader reader;
 
     protected final String Log_Tag = "TAG";
@@ -76,7 +74,7 @@ public class DictEntryRepository {
     Implementation of AsycTask for Insert function
      */
 
-    public void insert(DictEntry dictEntry){
+    public void insert(DictEntry... dictEntry){
         new insertAsyncTask(dictEntryDao, reader).execute(dictEntry);
     }
 
@@ -93,7 +91,7 @@ public class DictEntryRepository {
         @Override
         protected Void doInBackground(final DictEntry... params){
             Log.v("TAG", "data pusher async task background started");
-            asyncTaskDao.insert(params[0]);
+            asyncTaskDao.insert(params);
             return null;
         }
 

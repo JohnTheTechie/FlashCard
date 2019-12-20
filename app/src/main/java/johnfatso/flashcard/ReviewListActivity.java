@@ -108,7 +108,7 @@ public class ReviewListActivity extends AppCompatActivity implements DBreader{
             Log.v(LOG_TAG, "OnBindViewHolder Entered");
 
             holder.specimen.setText(dataset.get(position).getDeutcheWort());
-            holder.type.setText(dataset.get(position).getDeutcheWortType());
+            holder.type.setText(dataset.get(position).getPlural());
             holder.translation.setText(dataset.get(position).getEnglischeTranslation());
         }
 

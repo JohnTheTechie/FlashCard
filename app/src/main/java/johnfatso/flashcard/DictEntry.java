@@ -17,8 +17,8 @@ public class DictEntry {
     private String deutcheWort;
 
     @NonNull
-    @ColumnInfo(name = "german_word_type")
-    private String deutcheWortType;
+    @ColumnInfo(name = "plural")
+    private String plural;
 
     @NonNull
     @ColumnInfo(name = "english_translation")
@@ -28,9 +28,9 @@ public class DictEntry {
     @ColumnInfo(name = "entered_date")
     private long enteredDate;
 
-    public DictEntry(@NonNull String deutcheWort, @NonNull String deutcheWortType, @NonNull String englischeTranslation, @NonNull long enteredDate) {
+    public DictEntry(@NonNull String deutcheWort, @NonNull String plural, @NonNull String englischeTranslation, @NonNull long enteredDate) {
         this.deutcheWort = deutcheWort;
-        this.deutcheWortType = deutcheWortType;
+        this.plural = plural;
         this.englischeTranslation = englischeTranslation;
         this.enteredDate = enteredDate;
     }
@@ -39,8 +39,8 @@ public class DictEntry {
         this.deutcheWort = deutcheWort;
     }
 
-    public void setDeutcheWortType(@NonNull String deutcheWortType) {
-        this.deutcheWortType = deutcheWortType;
+    public void setPlural(@NonNull String plural) {
+        this.plural = plural;
     }
 
     public void setEnglischeTranslation(@NonNull String englischeTranslation) {
@@ -55,8 +55,8 @@ public class DictEntry {
         return deutcheWort;
     }
 
-    public String getDeutcheWortType() {
-        return deutcheWortType;
+    public String getPlural() {
+        return plural;
     }
 
     public String getEnglischeTranslation() {

@@ -1,0 +1,54 @@
+<root>
+    <word>
+        <german>Der Vogel</german>
+        <english>Bird</english>
+        <german-plural>Die Vogel</german-plural>
+    </word>
+    <word>
+        <german>Der Schneider</german>
+        <english>Tailor</english>
+        <german-plural>Die Schneider</german-plural>
+    </word>
+    <word>
+        <german>Der Schuler</german>
+        <english>Schoolboz</english>
+        <german-plural>Die Schuler</german-plural>
+    </word>
+    <word>
+        <german>Test German 1</german>
+        <english>Test English 1</english>
+        <german-plural>Test Plural 1</german-plural>
+    </word>
+    <word>
+        <german>Test German 2</german>
+        <english>Test English 2</english>
+        <german-plural>Test Plural 2</german-plural>
+    </word>
+    <word>
+        <german>Test German 3</german>
+        <english>Test English 3</english>
+        <german-plural>Test Plural 3</german-plural>
+    </word>
+    <word>
+        <german>Test German 4</german>
+        <english>Test English 4</english>
+        <german-plural>Test Plural 4</german-plural>
+    </word>
+    <word>
+        <german>Test German 5</german>
+        <english>Test English 5</english>
+        <german-plural>Test Plural 5</german-plural>
+    </word>
+    <word>
+        <german>Test German 6</german>
+        <english>Test English 6</english>
+        <german-plural>Test Plural 6</german-plural>
+    </word>
+    <word>
+        <german>Test German 7</german>
+        <english>Test English 7</english>
+        <german-plural>Test Plural 7</german-plural>
+    </word>
+
+
+</root>

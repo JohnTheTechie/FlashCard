@@ -1,7 +1,5 @@
 package johnfatso.flashcard;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -28,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class FlashCardFragment extends Fragment {
     // the fragment initialization parameters, 3 string for the flash card
     static final String ARG_SPECIMEN_STRING = "param1";
-    static final String ARG_TYPE_STRING = "param2";
+    static final String ARG_PLURAL_STRING = "param2";
     static final String ARG_TRANSLATION_STRING = "param3";
 
     //Card animation status keepers
@@ -39,7 +37,7 @@ public class FlashCardFragment extends Fragment {
 
     // parameters to be initialized during creation of fragment
     private String specimen;
-    private String type;
+    private String plural;
     private String translation;
 
     //to tell which of the textviews need to be set visible in current state
@@ -47,7 +45,7 @@ public class FlashCardFragment extends Fragment {
 
     //the text views
     private TextView specimen_text;
-    private TextView type_text;
+    private TextView plural_text;
     private TextView translation_text;
 
     private ImageView card;
@@ -62,11 +60,11 @@ public class FlashCardFragment extends Fragment {
     }
 
 
-    public static FlashCardFragment newInstance(String specimen, String type, String translation) {
+    public static FlashCardFragment newInstance(String specimen, String plural, String translation) {
         FlashCardFragment fragment = new FlashCardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_SPECIMEN_STRING, specimen);
-        args.putString(ARG_TYPE_STRING, type);
+        args.putString(ARG_PLURAL_STRING, plural);
         args.putString(ARG_TRANSLATION_STRING, translation);
         fragment.setArguments(args);
 
@@ -83,7 +81,7 @@ public class FlashCardFragment extends Fragment {
         //if arguments are passed, the thre strings are recovered from bundle
         if (getArguments() != null) {
             specimen = getArguments().getString(ARG_SPECIMEN_STRING);
-            type = getArguments().getString(ARG_TYPE_STRING);
+            plural = getArguments().getString(ARG_PLURAL_STRING);
             translation = getArguments().getString(ARG_TRANSLATION_STRING);
             Log.v("TAG", "FlashCardFragment created for specimen "+specimen+" and translation "+translation);
         }
@@ -97,7 +95,7 @@ public class FlashCardFragment extends Fragment {
 
         //from the inflated view, create references to the text views and card
         specimen_text = fragmentView.findViewById(R.id.fc_specimen);
-        type_text = fragmentView.findViewById(R.id.fc_type);
+        plural_text = fragmentView.findViewById(R.id.fc_type);
         translation_text = fragmentView.findViewById(R.id.fc_translation);
 
         ImageView card=fragmentView.findViewById(R.id.flippercard);
@@ -124,7 +122,7 @@ public class FlashCardFragment extends Fragment {
         mListener.flipOutPager(this);
         configureTextViews(FLIP_STATUS_FLIP_STARTED);
         mListener.flipInPager(this);
-        new waitAsyncTask().execute();
+        new waitAsyncTask(this).execute();
 
 
     }
@@ -133,7 +131,7 @@ public class FlashCardFragment extends Fragment {
         // set the texts from the initialization parameters
         specimen_text.setText(specimen);
         translation_text.setText(translation);
-        type_text.setText(type);
+        plural_text.setText(plural);
     }
 
     private void configureTextViews(int flipperState){
@@ -141,21 +139,21 @@ public class FlashCardFragment extends Fragment {
         if(flipperState == FLIP_STATUS_FLIP_STARTED){
             Log.v(LOG_TAG, "flipping text");
             specimen_text.setVisibility(View.INVISIBLE);
-            type_text.setVisibility(View.INVISIBLE);
+            plural_text.setVisibility(View.INVISIBLE);
             translation_text.setVisibility(View.INVISIBLE);
         }
         else if(flipperState == FLIP_STATUS_FACING_UP){
             Log.v(LOG_TAG, "car facing up");
             isCardFacingUp = true;
             specimen_text.setVisibility(View.VISIBLE);
-            type_text.setVisibility(View.INVISIBLE);
+            plural_text.setVisibility(View.INVISIBLE);
             translation_text.setVisibility(View.INVISIBLE);
         }
         else if(flipperState == FLIP_STATUS_FACING_DOWN){
             Log.v(LOG_TAG, "card facing down");
             isCardFacingUp = false;
             specimen_text.setVisibility(View.INVISIBLE);
-            type_text.setVisibility(View.VISIBLE);
+            plural_text.setVisibility(View.VISIBLE);
             translation_text.setVisibility(View.VISIBLE);
         }
 
@@ -186,15 +184,22 @@ public class FlashCardFragment extends Fragment {
     }
 
     public interface OnFlashcardInteractionListener {
-        // TODO: Update argument type and name
+        // TODO: Update argument plural and name
         void onFragmentInteraction(Uri uri);
         void flipOutPager(Fragment fragment);
         void flipInPager(Fragment fragment);
     }
 
-    private class waitAsyncTask extends AsyncTask{
+    private static class waitAsyncTask extends AsyncTask<Void, Void, Void>{
+
+        FlashCardFragment fragment;
+
+        public waitAsyncTask(FlashCardFragment fragment) {
+            this.fragment = fragment;
+        }
+
         @Override
-        protected Object doInBackground(Object[] objects) {
+        protected Void doInBackground(Void... voids) {
             try {
                 TimeUnit.MILLISECONDS.sleep(500);
             }catch (Exception e){
@@ -204,10 +209,10 @@ public class FlashCardFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(Object o) {
+        protected void onPostExecute(Void o) {
             super.onPostExecute(o);
-            if(!isCardFacingUp) configureTextViews(FLIP_STATUS_FACING_UP);
-            else configureTextViews(FLIP_STATUS_FACING_DOWN);
+            if(!fragment.isCardFacingUp) fragment.configureTextViews(fragment.FLIP_STATUS_FACING_UP);
+            else fragment.configureTextViews(fragment.FLIP_STATUS_FACING_DOWN);
         }
     }
 }

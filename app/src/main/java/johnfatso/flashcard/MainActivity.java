@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
                 onPracticeButtonClicked(view);
             }
         });
+
+        DictEntryRepository repository = new DictEntryRepository(getApplication(), null);
+
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... voids) {
+                repository.dictEntryDao.getTotalItemCount();
+                return null;
+            }
+        }.execute();
     }
 
     public void onAddButtonClicked(View view){

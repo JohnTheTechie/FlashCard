@@ -4,13 +4,13 @@ import java.sql.Date;
 
 public class DictDefinition {
     String wort;
-    String type;
+    String plural;
     String translation;
     long enteredDate;
 
-    public DictDefinition(String wort, String type, String translation, long enteredDate) {
+    public DictDefinition(String wort, String plural, String translation, long enteredDate) {
         this.wort = wort;
-        this.type = type;
+        this.plural = plural;
         this.translation = translation;
         this.enteredDate = enteredDate;
     }

@@ -59,19 +59,23 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
 
     @Override
     public void flipInPager(Fragment fragment) {
-        Log.v(LOG_TAG, "Animation ended on pager | current page :" + pager.getCurrentItem());
+        Log.v(LOG_TAG, "Animation ended on pager | current page :" + pager.getCurrentItem()+" of total children of "+pager.getChildCount());
         flipInAnimator = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.card_flip_right_in);
         flipInAnimator.setTarget(pager.getChildAt(getPositionIndexOfTheAvailableChild(pager.getCurrentItem())));
+
         flipInAnimator.start();
     }
 
     private int getPositionIndexOfTheAvailableChild(int position){
         int actualPosition = -1;
+        Log.v(LOG_TAG, "the current position :"+position);
         int pageCount = adapter.getCount();
-        if(pageCount > 0){
+        if(pageCount > 2){
             if(position == 0) actualPosition = 0;
+            else if(adapter.getCount()-1 == position) actualPosition =2;
             else actualPosition = 1;
         }
+        Log.v(LOG_TAG, "the actual position :"+actualPosition);
         return actualPosition;
     }
 
@@ -91,7 +95,7 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
             Fragment fragment = new FlashCardFragment();
             Bundle bundle = new Bundle();
             bundle.putString(FlashCardFragment.ARG_SPECIMEN_STRING, dataset[position].getDeutcheWort());
-            bundle.putString(FlashCardFragment.ARG_TYPE_STRING, dataset[position].getDeutcheWortType());
+            bundle.putString(FlashCardFragment.ARG_PLURAL_STRING, dataset[position].getPlural());
             bundle.putString(FlashCardFragment.ARG_TRANSLATION_STRING, dataset[position].getEnglischeTranslation());
 
             fragment.setArguments(bundle);
@@ -116,6 +120,7 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
         //configuring list
         pager = findViewById(R.id.cardPager);
         pager.setAdapter(adapter);
+        pager.setOffscreenPageLimit(1);
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -141,7 +146,6 @@ public class CardFlashActivity extends FragmentActivity implements DBreader, Fla
     @Override
     public void DBreaderResponse(Object data) {
         DictEntry[] dataset = (DictEntry[]) data;
-
         Log.v(LOG_TAG, "response received to card flash activity | entries recieved : "+dataset.length);
         setupPager((DictEntry[])data);
         setCounter(1);

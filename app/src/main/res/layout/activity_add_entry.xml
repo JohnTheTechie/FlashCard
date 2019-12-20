@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/common_bg"
     tools:context=".AddEntryActivity">
 
     <EditText
@@ -15,7 +15,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/specimen_default"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textSize="10pt"
         app:layout_constraintBottom_toTopOf="@+id/spinner_word_type"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/translation_default"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textSize="10pt"
         app:layout_constraintBottom_toTopOf="@+id/button_add_entry"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
 
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textSize="10pt"
         android:text="@string/dict_word_type_default_text"
         app:layout_constraintBottom_toTopOf="@+id/translation_textbox"
@@ -65,7 +65,7 @@
         android:layout_marginTop="86dp"
         android:layout_marginEnd="16dp"
         android:text="Add"
-        android:background="@drawable/red_card"
+        android:background="@drawable/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.84"
